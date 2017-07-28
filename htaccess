@@ -1,0 +1,40 @@
+# Apache Config v1.0.2
+#
+# Listado de carpetas
+#
+# Se puede dar el caso que queramos mostrar el contenido de una carpeta en la estructura de directorios. 
+# Para eso utilizaremos lo siguiente.
+Options +Indexes
+
+# Si por el contrario queremos evitar el listado de carpetas, lo que podemos utilizar es lo siguiente
+IndexIgnore *
+
+# No mostrar "www"
+
+RewriteEngine on
+RewriteCond %{http_host} ^www\.example\.com[nc]
+RewriteRule ^(.*)$ http://example.com/$1 [r=301,nc]
+
+#
+# HOTLINKING
+#
+# El hotlinking consiste en realizar un enlace directo a ficheros que pertenecen a otro sitio web. Con esto
+# estamos consiguiendo mostrar en nuestra web una imagen o vídeo que no está subido en nuestro servidor,
+# lo que consume la transferencia del sitio donde está subido ese fichero. Si queremos evitar que nos
+# “roben” nuestra transferencia o simplemente no queremos que nadie enlace archivos subidos en nuestro
+# servidor, lo podemos hacer mediante el siguiente código.
+
+RewriteEngine on
+RewriteCond %{HTTP_REFERER} !^$
+RewriteCond %{HTTP_REFERER} !^http://([-a-z0-9]+\.)?example\.com[NC]
+RewriteRule .*\.(zip|mp3|avi|wmv|mpg|mpeg)$
+
+http://www.example.com/images/nohotlink.gif [R,NC,L]
+
+#
+# URL AMIGABLE
+#
+RewriteEngine On
+RewriteCond %{SCRIPT_FILENAME} !-d
+RewriteCond %{SCRIPT_FILENAME} !-f
+^(([A-Za-z0-9]+[-]+[A-Za-z0-9]+)+[/]([A-Za-z0-9]+[-]+[A-Za-z0-9]+)+[/])$  index.php?controller=$1&action=$
