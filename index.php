@@ -10,6 +10,18 @@ require("core/Functions.php");
 if(!session_start()){
     session_start();
 }
+?>
+    <!-- Script para notificaciones -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        setTimeout(function() {
+            $(".content").fadeOut(1500);
+        },3000);
+    });
+</script>
+    <!-- Fin de Script para notificaciones -->
+<?php
 // Usuario Logueado ?
 // Está definida La variable / existe sesión?
 // Existe el Controlador ?
